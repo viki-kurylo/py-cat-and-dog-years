@@ -1,31 +1,19 @@
 def get_human_age(cat_age: int, dog_age: int) -> list:
 
-    cat_first_year_gap = 15
-    cat_second_year_gap = 9 + cat_first_year_gap
-    cat_other_years_gap = 4
+    cat_age_gaps = [15, 9, 4]
+    dog_age_gaps = [15, 9, 5]
 
-    if cat_age < cat_first_year_gap:
-        cat_human_years = 0
-    elif cat_age < cat_second_year_gap:
-        cat_human_years = 1
-    elif cat_age < cat_second_year_gap + cat_other_years_gap:
-        cat_human_years = 2
-    else:
-        cat_human_years = ((cat_age - cat_second_year_gap)
-                           // cat_other_years_gap + 2)
+    def age_calculator(animal_age: int, age_gaps: list) -> int:
+        if animal_age < age_gaps[0]:
+            animal_human_years = 0
+        elif animal_age < sum(age_gaps[:2]):
+            animal_human_years = 1
+        elif animal_age < sum(age_gaps):
+            animal_human_years = 2
+        else:
+            animal_human_years = ((animal_age - sum(age_gaps[:2]))
+                                  // age_gaps[2] + 2)
+        return animal_human_years
 
-    dog_first_year_gap = 15
-    dog_second_year_gap = 9 + dog_first_year_gap
-    dog_other_years_gap = 5
-
-    if dog_age < dog_first_year_gap:
-        dog_human_years = 0
-    elif dog_age < dog_second_year_gap:
-        dog_human_years = 1
-    elif dog_age < dog_second_year_gap + dog_other_years_gap:
-        dog_human_years = 2
-    else:
-        dog_human_years = ((dog_age - dog_second_year_gap)
-                           // dog_other_years_gap + 2)
-
-    return [cat_human_years, dog_human_years]
+    return [age_calculator(cat_age, cat_age_gaps),
+            age_calculator(dog_age, dog_age_gaps)]
